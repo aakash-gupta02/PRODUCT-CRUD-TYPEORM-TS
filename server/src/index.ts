@@ -20,7 +20,16 @@ app.post("/upload", upload.array("image", 5 ), (req: Request, res: Response) => 
   console.log("Body:", req.body); // text fields
   console.log("File:", req.files); // uploaded file info
 
-  res.send("Image uploaded");
+    const files = req.files as Express.Multer.File[];
+
+    const imageUrls = files.map(file => file.path); // Cloudinary returns `path` as the secure_url
+
+
+  res.json({
+    message: 'Uploaded successfully',
+    urls: imageUrls
+  });
+
 });
 
 
