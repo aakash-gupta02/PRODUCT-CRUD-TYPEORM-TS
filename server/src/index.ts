@@ -13,8 +13,6 @@ app.use(express.json())
 const port = 3000
 
 
-
-
 app.post("/upload", upload.array("image", 5 ), (req: Request, res: Response) => {
     
   console.log("Body:", req.body); // text fields
@@ -22,8 +20,7 @@ app.post("/upload", upload.array("image", 5 ), (req: Request, res: Response) => 
 
     const files = req.files as Express.Multer.File[];
 
-    const imageUrls = files.map(file => file.path); // Cloudinary returns `path` as the secure_url
-
+    const imageUrls = files.map(file => file.path);
 
   res.json({
     message: 'Uploaded successfully',
