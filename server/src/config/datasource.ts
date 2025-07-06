@@ -1,5 +1,21 @@
 import { DataSource } from "typeorm";
-import { Product } from "../entity/product";
+import { Products } from "../entity/product";
+import dotenv from "dotenv"
+
+dotenv.config()
+
+// export const datasource = new DataSource({
+//     type: "postgres",
+//     url: process.env.DB_URL,
+//     synchronize: true,
+//     logging: true,
+//     entities: [Products],
+//   extra: {
+//     connectionTimeoutMillis: 15000,
+//     idleTimeoutMillis: 10000,
+//   },
+
+// })
 
 export const datasource = new DataSource({
     type: "postgres",
@@ -9,6 +25,6 @@ export const datasource = new DataSource({
     password: "root",
     database: "crudpost",
     synchronize: true,
-    logging: true,
-    entities: [Product],
+    logging: false,
+    entities: [Products],
 })

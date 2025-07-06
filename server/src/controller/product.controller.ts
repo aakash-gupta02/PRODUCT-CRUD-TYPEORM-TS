@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { datasource } from "../config/datasource";
-import { Product } from "../entity/product";
+import { Products } from "../entity/product";
 
-const repo = datasource.getRepository(Product)
+const repo = datasource.getRepository(Products)
 
 export const getProducts = async (_: Request, res: Response) => {
     const products = await repo.find();

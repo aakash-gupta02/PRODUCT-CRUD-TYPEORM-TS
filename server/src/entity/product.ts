@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column  } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity("product")
-export class Product{
+@Entity("product1")
+export class Products {
+
     @PrimaryGeneratedColumn()
-    id!: number;
+    sku!: number;
 
     @Column()
     name!: string;
@@ -13,4 +14,7 @@ export class Product{
 
     @Column()
     description!: string;
+
+    @Column("text", { array: true })
+    images!: string[];
 }
