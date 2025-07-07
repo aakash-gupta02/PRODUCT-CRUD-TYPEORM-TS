@@ -1,5 +1,6 @@
 import "reflect-metadata"
 import { Request, Response } from "express";
+import cors from "cors"
 
 import express from "express"
 import { datasource } from "./config/datasource"
@@ -8,6 +9,7 @@ import { upload } from "./middleware/multer";
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 const port = 3000

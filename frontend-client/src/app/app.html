@@ -1,3 +1,67 @@
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
+<div class="p-4">
+  <!-- Product List -->
+  <div *ngFor="let product of products" class="mb-4 p-4 border rounded">
+    <div class="flex gap-4">
+      <!-- First image with fixed dimensions -->
+      <div *ngIf="product.images?.length" class="flex-shrink-0">
+        <img [src]="product.images[0]" 
+             class="w-32 h-32 object-cover rounded">
+      </div>
+      <div>
+        <h3 class="font-bold">{{ product.name }}</h3>
+        <p>SKU: {{ product.sku }}</p>
+        <p>Price: ${{ product.price }}</p>
+        <p>{{ product.description }}</p>
+      </div>
+    </div>
+    <div class="mt-2 space-x-2">
+      <button (click)="editProduct(product.sku)" 
+              class="px-3 py-1 bg-blue-500 text-white rounded">
+        Edit
+      </button>
+      <button (click)="deleteProduct(product.sku)"
+              class="px-3 py-1 bg-red-500 text-white rounded">
+        Delete
+      </button>
+    </div>
+  </div>
+
+  <!-- Add/Edit Form -->
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="mt-8 p-4 border rounded">
+    <h2 class="text-xl font-bold mb-4">
+      {{ isEditing ? 'Edit Product' : 'Add New Product' }}
+    </h2>
+    
+    <div class="space-y-4">
+      <div>
+        <label>Name</label>
+        <input formControlName="name" class="w-full p-2 border rounded">
+      </div>
+      
+      <div>
+        <label>Price</label>
+        <input type="number" formControlName="price" class="w-full p-2 border rounded">
+      </div>
+      
+      <div>
+        <label>Description</label>
+        <textarea formControlName="description" class="w-full p-2 border rounded"></textarea>
+      </div>
+      
+      <div>
+        <label>Images (Multiple)</label>
+        <input type="file" multiple (change)="onImageSelect($event)" 
+               class="w-full p-2 border rounded">
+      </div>
+      
+      <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">
+        {{ isEditing ? 'Update' : 'Add' }}
+      </button>
+      
+      <button *ngIf="isEditing" type="button" (click)="resetForm()"
+              class="px-4 py-2 bg-gray-500 text-white rounded ml-2">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
