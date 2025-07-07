@@ -51,13 +51,25 @@ export const updateProduct = async (req: Request, res: Response) => {
   try {
     const { sku } = req.params;
     const { name, price, description } = req.body;
+    const files = req.files as Express.Multer.File[];
 
     const existingProduct = await repo.findOneBy({ sku: parseInt(sku) });
     if (!existingProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    await repo.update({ sku: parseInt(sku) }, { name, price, description });
+    // If new images are uploaded, replace old ones
+    let updatedImages = existingProduct.images;
+    if (files && files.length > 0) {
+      updatedImages = files.map(file => file.path);
+    }
+
+    await repo.update({ sku: parseInt(sku) }, {
+      name,
+      price,
+      description,
+      images: updatedImages,
+    });
 
     res.status(200).json({ message: "Product updated successfully" });
   } catch (error) {
@@ -65,6 +77,7 @@ export const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
 
 // Delete product
 export const deleteProduct = async (req: Request, res: Response) => {

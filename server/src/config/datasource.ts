@@ -8,7 +8,7 @@ export const datasource = new DataSource({
     type: "postgres",
     url: process.env.DB_URL,
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [Products],
   extra: {
     connectionTimeoutMillis: 15000,
